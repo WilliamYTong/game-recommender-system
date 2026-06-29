@@ -61,7 +61,6 @@ def cosSimlarity(playerA, playerB):
 #Testing cosSimlarity
 # print(f"Similarity Score betweem Alice and Bob: {cosSimlarity(users[0], users[1])}")
 
-
 #This is the implementation of Jaccard Matric (Weighted)
 # This metirc is to measure similarity based on overlap of games, weighted by each game global ratings
 # Equation: score = Σmin(weightA, weightB)/ Σmax(weightA, weightB)
@@ -84,16 +83,16 @@ def jaccardSimlarity(playerA,playerB):
         y = y + max(weightA,weightB)
     if y == 0.0: return 0.0
     return x / y
-#Testing Jaccard Similarity Passed
+# Testing Jaccard Similarity Passed
 # print(f"Alice vs Frank : {jaccardSimlarity(users[0], users[5]):.4f}")
 
-#This is the combination of cosine similarity on the gener profiles and Jaccard Similariy
+#This is the combination of cosine similarity on the gener profiles and Jaccard Similariy on the share games
 # This also uses dp to avoid recomputation in the future when the similarity score are genereated in the graph
 # cosine similarity (70%), Jaccard Similariy (30%)
 # Time Complexity = O(G+H), 
 #       G = total unique game across player A and B from jaccard Simimlarity|
 #       H = size of genre profile(cosine similarity)
-# Space Complexity = O(P^2) P = number of users (storing all pairwise similarities)
+# Space Complexity = O(1) for this function, but O(P^2) P = number of users (storing all pairwise similarities) when search for every users similarity
 def similarity(playerA, playerB, dp= {}):
     if dp is None:
         dp = {}
@@ -110,6 +109,7 @@ def similarity(playerA, playerB, dp= {}):
 # similarity(users[0], users[2])
 # similarity(users[2], users[0])
 # print(similarity.__defaults__)
+# print(similarity(users[0],users[6]))
 
 #Before we compute the simlariy and connecting each player node:
 # Builds a genre-based bucket index for all users
@@ -165,10 +165,12 @@ def binarySearchBound(arr, target, right = False):
 # genre-based filtering: get relevant genre for player
 # for each genre, find users within a score window(+-0.2)
 # get the qualified unique user_ids
-# Time Complexity: O(G log U + K)
-# G = number of genres for player
-# U = users per bracket(binary search)
-# K = number of candidates returned
+# Time Complexity: O(f + G * U + K)
+#   f = cost of getPlayedGenres per player
+#   G = number of genres for player  
+#   U = average users per genre bucket
+#   K = number of candidates returned
+#   Dominant term: O(G * U) from creating scores lists
 # Space Complexity: O(K)
 def findCandidates(player, genreBucket, windowGap = 0.2):
     candidates = set()
@@ -205,15 +207,17 @@ def getTopKNeighbors(player, candidates, k = 3):
 #Testing            #need to test by hand
 # buckets = buildGenreBucket(users)
 # candidates = findCandidates(users[0], buckets)
-# topK      = getTopKNeighbors(users[0], candidates, 3)
-# for sim, uid in sorted(topK, reverse=True):
-#     print(f"  {user_lookup[uid].name:<10} → sim={sim:.4f}")
-
+# topK      = getTopKNeighbors(users[0], candidates, 99)
+# for i, (sim, uid) in enumerate(sorted(topK, reverse=True), start=1):
+#     print(f"{i}. {user_lookup[uid].name:<10} → sim={sim:.4f}")
+# print(users[0].name)
 
 # A full user-user graph using BFS traversal
-# # Time Complexity: O(N * C log K)
+# # Time Complexity: O(C_b + N(C_f + C log K))
 #   N = number of visited users
 #   C = number of candidates per user
+#   C_b = cost of buildGenreBucket()
+#   C_f = cost of findCandidates()
 #   K = top-K neighbors
 # Space Complexity: O(N + E)
 #   E = similarity edges
@@ -226,7 +230,8 @@ def buildFullTopkGraph(all_users, k=3):
     def bfsGraph(start, buckets, graph, visited):
         """For the given user, finds the top 3 most similar neighbors and adds similarity edges.
            Then expands to each neighbor using BFS. This is the helper function for build Full Top-k Graph
-           Time Complexity: O(C log K)
+           Time Complexity: O(C_f + C log K)
+            C_f = cost of findCandidates()
            Space Complexity: O(N + E)"""
         queue = deque()
         queue.append(start.user_id)
@@ -354,8 +359,6 @@ def getSCCs(graph):
         if i not in disc:
             findSCC(i, graph, disc, low, inSt, st, timer, allSCCs)
     return allSCCs
-
-
 # Testingn for sccs         #Tested  based on the graph drawing-PASSED
 # graph = buildFullTopkGraph(users, 3)
 # sccs = getSCCs(graph)
@@ -363,6 +366,7 @@ def getSCCs(graph):
 # for i, scc in enumerate(sccs):
 #     names = [user_lookup[uid].name for uid in scc]
 #     print(f"  SCC {i+1}  → {names}")
+
 
 # Condense the user-user graph into scc graph
 # each scc group is treated as single node
@@ -387,7 +391,9 @@ def condenseGraph(graph, sccs):
     output = {}
     for i, neighbors in condensed.items():
         output[i] = list(neighbors)
-    return output, scc_map      #return also scc_map so propagateScore fucntion does not need to calculate again
+    #return also scc_map so propagateScore fucntion does not need to calculate again
+    return output, scc_map   
+
 #Test in graph_drawing.py
 
 #This is the helper function.
@@ -407,3 +413,4 @@ def genreMatch(player, game):
     if count <= 0:
         return 0.0
     return total/count
+# print(8.7*genreMatch(user_lookup["004"],games["G7"]))

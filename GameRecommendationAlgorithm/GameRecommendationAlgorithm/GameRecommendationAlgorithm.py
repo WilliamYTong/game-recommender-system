@@ -57,7 +57,7 @@ def computeRecommendationScores(target_uid, scc_members, scc_map, condensed, gam
                 game  = games_dict[gameId]
                 gm    = genreMatch(targetUser, game)
                 score = game.rating * LIBRARY_WEIGHT * gm
-            # only add if not already scored higher by neighbor propagation
+                # only set score if not already assigned
                 if gameId not in gameScores_dp:
                     gameScores_dp[gameId] = score
     neighPropagate()
@@ -65,7 +65,7 @@ def computeRecommendationScores(target_uid, scc_members, scc_map, condensed, gam
     return gameScores_dp
 
 if __name__ == "__main__":
-    targetPlayerId = "001"
+    targetPlayerId = "100"
     targetPlayer = user_lookup[targetPlayerId]
     graph = buildFullTopkGraph(users, 3)
     sccs = getSCCs(graph)
@@ -78,10 +78,10 @@ if __name__ == "__main__":
     print("║                   Game Recommendation System                      ║")
     print("=====================================================================")
     print(f"Target Player ID : {targetPlayerId}")
-    print(f"Name             : {targetPlayer}")
+    print(f"Name             : {targetPlayer.name}")
     print(f"Favourite Genre  : {targetPlayer.favorite_genre}")
     print("*********************************************************************")
-
-    for i, (game_id, score) in enumerate(scored_list[:30], 1):
+    
+    for i, (game_id, score) in enumerate(scored_list, 1):
         game = games[game_id]
-        print(f"  {i:<3} {game.title:<35} score={score:.2f}  genres={game.genres}")
+        print(f"  {i:<3} {game.title:<50} score={score:.2f}  genres={game.genres}")
