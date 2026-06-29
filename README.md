@@ -99,3 +99,16 @@ Favourite Genre  : Horror
  | Merge sort() | O( n log n) | O(n) |
 
 *U = number of users, f = average number of games played per user, G = average number of genres, G’ = total unique game across player A and B, H’ = size of genre profile, fg = cost of getPlayedGenres per user, K = number of candidates returned, Cf = cost of findCandidates(), C𝑏=  cost of buildGenreBucket(), C = number of candidates, K’ = number of neighbors to keep, V = number of vertices, E = number of edges, E’ = number of edges in the condensed SCC graph, H = number of SCCs reached within max_hops, M = average number of users/members per SCC, P = average number of games per user, Lg = total games scanned via genre lookup, Q = BFS queue size*
+
+## Current Limitation
+  The recommendation system currently prioritizes genre preferences over shared games by combining 70% cosine similarity and 30% weighted Jaccard similarity.  Finding a better weighting equation could produce a more diverse and balanced recommendation system by improving the trade-off between users' genre profiles and shared game libraries.
+  Currently, the maximum hop of 2 limits SCC traversal depth. Increasing the number of hops would improve coverage but would also increase the computational costs. The system also only considers the Top-3 neighbors, which misses users with mid-range similarities. Increasing K to 5-10 could widen influence.
+  The project was mainly tested with 500 users, averaging 12 games per user (0 to 25 games per user). It should still perform for 5K users, but performance for 100K+ users would be poor. This current system does not include consideration for old games and newly released games; currently, all are treated equally.
+## Future Works
+ - Tune the similariy metric to increase diversity among player connections
+ - Reduce space and time complexity as much as possible to imporve scalability up to 1M players
+ - Increase to top 10 neighbors
+ - Add game price, and individual user ratings to recommendation consideration
+ - Ad the difference between new games and old games into the recommendation model
+
+:smile: :smile: :smile: :smile: :smile: :smile:
