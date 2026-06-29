@@ -22,14 +22,15 @@ In our test, we have 100 players, and it formed the 10 SCCs. So, instead of trac
 ## Files in this project
 game-recommendation-system/GameRecommendationAlgorithm
    |
-   |- ***GameRecommendationAlgorithm.py***  <- Run this/ **Main**
-   |- GameRecommendationAlgorithm_Prep.py ← Helper functions
-   |- ***graph_drawing.py***              ← Run this/ **To show the network visually**
-   |- UserModel.py                        <- build player object
-   |- UserData.py                         <- 100 players info
-   |- GameModel.py                        <- build game object
-   |- GamesData.py                        <- 500 Games info
-   |- README.md                           <- this page
+   | ***GameRecommendationAlgorithm.py***  <- Run this/ **Main**
+   | GameRecommendationAlgorithm_Prep.py ← Helper functions
+   | ***graph_drawing.py***              ← Run this/ **To show the network visually**
+   | UserModel.py                        <- build player object
+   | UserData.py                         <- 100 players info
+   | GameModel.py                        <- build game object
+   | GamesData.py                        <- 500 Games info
+   | README.md                           <- this page
+   |_
 * testForRecommendation.py wtth ~ 30 test cases and will be updated later.
 **Use This command** to run the python test case: python -m pytest tests/testForRecommendation.py -v
 ## Requirements
