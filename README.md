@@ -20,15 +20,17 @@ In our test, we have 100 players, and it formed the 10 SCCs. So, instead of trac
 ##### Backup - Check the Game Library
   - If the algorithm cannot find enough recommended games, or if the target player does not belong to any SCC, it falls back to the player's declared favorite genre. Games matching that genre aer then recommended to ensure player gets the relevanat suggestions.
 ## Files in this project
-game-recommendation-system/GameRecommendationAlgorithm
-   1. ***GameRecommendationAlgorithm.py***  <- Run this/ **Main**
-   2. GameRecommendationAlgorithm_Prep.py ← Helper functions
-   3. ***graph_drawing.py***              ← Run this/ **To show the network visually**
-   4. UserModel.py                        <- build player object
-   5. UserData.py                         <- 100 players info
-   6. GameModel.py                        <- build game object
-   7. GamesData.py                        <- 500 Games info
-   8. README.md                           <- this page
+<pre>
+  game-recommendation-system/GameRecommendationAlgorithm
+     |- ***GameRecommendationAlgorithm.py***  <- Run this/ **Main**
+     |- GameRecommendationAlgorithm_Prep.py ← Helper functions
+     |- ***graph_drawing.py***              ← Run this/ **To show the network visually**
+     |- UserModel.py                        <- build player object
+     |- UserData.py                         <- 100 players info
+     |- GameModel.py                        <- build game object
+     |- GamesData.py                        <- 500 Games info
+     |- README.md                           <- this page
+</pre>
 * testForRecommendation.py wtth ~ 30 test cases and will be updated later.
 **Use This command** to run the python test case: python -m pytest tests/testForRecommendation.py -v
 ## Requirements
