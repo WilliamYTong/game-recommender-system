@@ -80,4 +80,22 @@ Favourite Genre  : Horror
  
  | Core: Test Case | Input | Expected | Actual |
  |-----------------|-------|----------|--------|
- |T1-typical player |Id=’009’ |Top results-Simulation, score for Microsoft Flight Simulator= 8.37 no duplicate games |Microsoft Flight Simulator Score = 8.37, genre – simulation, no duplicate games found Passed |
+ |T1-typical player |Id=’009’ |Top results-Simulation, score for Microsoft Flight Simulator= 8.37, no duplicate games |Microsoft Flight Simulator Score = 8.37, genre – simulation, no duplicate games found, Passed |
+ | T2-new player |Id=’007’|Fallback library pass returns, Racing title with score > 6.0, no duplicate games | Mario Kart 8 Deluxe, Score 6.51, no duplicate games found, Passed |
+ |T3-Small Library player | Id = ‘004’|Top results: high rated Strategy games expected score > 0.9, no duplicate games | Age of Empires II (Deluxe), Score = 9.40, no duplicate games found, Passed |
+
+ ## Performance and its complexity
+ | Function | Time Complexity | Space Complexity |
+ |----------|----------------|-----------------|
+ | buildGenreBucket() | O(U · f + U G log U) | O(U * G) |
+ | Similarity() | O(G’+H’) |O(1), O(P2) cache included |
+ | findCandidates() | O(fg + G * U + K) | O(K) |
+ | getTopKNeighbors() | O(C log K’) | O(K’) |
+ | buildFullTopkGraph() | O(Cb+N (Cf + C log K)) | O(N + E+Cb) |
+ | findSCC() | O(V+E) | O(V) | 
+ | getSCC() | O(V+E) | O(V) | 
+ | condenseGraph() | O(V+E’) | O(V+E’) | 
+ | **computeRecommendationScores() | O(H × M × P  + E’ + Lg) | O (G + H + Q) |
+ | Merge sort() | O( n log n) | O(n) |
+
+*U = number of users, f = average number of games played per user, G = average number of genres, G’ = total unique game across player A and B, H’ = size of genre profile, fg = cost of getPlayedGenres per user, K = number of candidates returned, Cf = cost of findCandidates(), C𝑏=  cost of buildGenreBucket(), C = number of candidates, K’ = number of neighbors to keep, V = number of vertices, E = number of edges, E’ = number of edges in the condensed SCC graph, H = number of SCCs reached within max_hops, M = average number of users/members per SCC, P = average number of games per user, Lg = total games scanned via genre lookup, Q = BFS queue size*
