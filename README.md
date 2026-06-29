@@ -1,4 +1,5 @@
 # game-recommender-algorithm
+**Current Release:** v1.0-final  
 ## Description
 This is the game recommendation algorithm that suggests games to players basedon what similar players enjoy. The recommendation process works as follows:
 1. Find similar players by comparing users' game preferences, and user's owned games
