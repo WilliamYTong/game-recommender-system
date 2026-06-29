@@ -81,7 +81,7 @@ Favourite Genre  : Horror
  | Core: Test Case | Input | Expected | Actual |
  |-----------------|-------|----------|--------|
  |T1-typical player |Id=’009’ |Top results-Simulation, score for Microsoft Flight Simulator= 8.37, no duplicate games |Microsoft Flight Simulator Score = 8.37, genre – simulation, no duplicate games found, Passed |
- | T2-new player |Id=’007’|Fallback library pass returns, Racing title with score > 6.0, no duplicate games | Mario Kart 8 Deluxe, Score 6.51, no duplicate games found, Passed |
+ | T2-new player |Id=’007’ | Fallback library pass returns, Racing title with score > 6.0, no duplicate games | Mario Kart 8 Deluxe, Score 6.51, no duplicate games found, Passed |
  |T3-Small Library player | Id = ‘004’|Top results: high rated Strategy games expected score > 0.9, no duplicate games | Age of Empires II (Deluxe), Score = 9.40, no duplicate games found, Passed |
 
  ## Performance and its complexity
