@@ -36,6 +36,7 @@ game-recommendation-system/GameRecommendationAlgorithm
 ## Run to see Recommendations
   - Run: python GameRecommendationAlgorithm.py
 ##### What the result looks like
+'''
 =====================================================================
 ║                   Game Recommendation System                      ║
 =====================================================================
@@ -63,6 +64,7 @@ Favourite Genre  : Horror
   18  Hades GOTY Edition                                 score=6.04  genres=['Action', 'RPG']
   19  Cyberpunk 2077 GOTY Edition                        score=5.85  genres=['RPG', 'Action']
   20  Cyberpunk 2077 Deluxe Edition                      score=5.85  genres=['RPG', 'Action']
+  '''
 ### Interpretation
   - Farrah's player ID is 100, and Farrah is Horror games fans. Based on our algorithm, the top recommendation for Farrah is Silent Hill 2 (Remasted)
 ## Run to see Graphs
